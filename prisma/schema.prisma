@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  nama         String
+  role         Role
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model ProfilDesa {
+  id           Int      @id @default(1)
+  namaDesa     String
+  kodeWilayah  String
+  kecamatan    String
+  kabupaten    String
+  provinsi     String
+  alamatKantor String
+  telepon      String
+  email        String
+  visi         String
+  misi         String[]
+  sejarah      String
+  luasWilayah  String
+  batasUtara   String
+  batasTimur   String
+  batasSelatan String
+  batasBarat   String
+  latitude     String
+  longitude    String
+  logoUrl      String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model PerangkatDesa {
+  id            String   @id @default(cuid())
+  name          String
+  jabatan       String
+  tempat_lahir  String
+  tanggal_lahir DateTime
+  agama         String
+  status        String
+  no_telp       String
+  pendidikan    String
+  nama_ayah     String
+  nama_ibu      String
+  nama_pasangan String?
+  jumlah_anak   Int?
+  alamat        String
+  urutan        Int
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+}
+
+
