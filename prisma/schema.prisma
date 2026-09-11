@@ -17,15 +17,23 @@ enum Role {
   ADMIN
 }
 
+enum StatusBerita {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
 model User {
-  id           String   @id @default(cuid())
-  email        String   @unique
+  id           String       @id @default(cuid())
+  email        String       @unique
   passwordHash String
   nama         String
   role         Role
-  active       Boolean  @default(true)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  active       Boolean      @default(true)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  berita       Berita[]
+  pengumuman   Pengumuman[]
 }
 
 model ProfilDesa {
@@ -69,8 +77,48 @@ model PerangkatDesa {
   jumlah_anak   Int?
   alamat        String
   urutan        Int
+  imageUrl      String
   created_at    DateTime @default(now())
   updated_at    DateTime @updatedAt
 }
 
+model KategoriBerita {
+  id        String   @id @default(cuid())
+  nama      String   @unique
+  slug      String   @unique
+  deskripsi String?
+  berita    Berita[]
+}
 
+model Berita {
+  id               String         @id @default(cuid())
+  judul            String
+  slug             String         @unique
+  kategoriBerita   KategoriBerita @relation(fields: [kategoriBeritaId], references: [id])
+  kategoriBeritaId String
+  isi              String
+  penulis          User           @relation(fields: [penulisId], references: [id])
+  penulisId        String
+  tanggal          DateTime
+  status           StatusBerita   @default(DRAFT)
+  views            Int            @default(0)
+  publishedAt      DateTime?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+}
+
+model Pengumuman {
+  id            String    @id @default(cuid())
+  judul         String
+  slug          String    @unique
+  isi           String
+  nomorSurat    String?
+  tanggalTerbit DateTime
+  berlakuSampai DateTime?
+  lampiranUrl   String?
+  penting       Boolean   @default(false)
+  penulis       User      @relation(fields: [penulisId], references: [id])
+  penulisId     String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
