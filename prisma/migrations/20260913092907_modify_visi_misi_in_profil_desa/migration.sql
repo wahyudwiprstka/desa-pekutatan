@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "ProfilDesa" ALTER COLUMN "misi" SET NOT NULL,
+ALTER COLUMN "misi" SET DATA TYPE TEXT;

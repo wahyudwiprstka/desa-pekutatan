@@ -46,8 +46,8 @@ model ProfilDesa {
   alamatKantor String
   telepon      String
   email        String
-  visi         String
-  misi         String[]
+  visi         String   @db.Text
+  misi         String   @db.Text
   sejarah      String
   luasWilayah  String
   batasUtara   String
