@@ -96,6 +96,7 @@ model Berita {
   slug             String         @unique
   kategoriBerita   KategoriBerita @relation(fields: [kategoriBeritaId], references: [id])
   kategoriBeritaId String
+  ringkasan        String
   isi              String
   penulis          User           @relation(fields: [penulisId], references: [id])
   penulisId        String
